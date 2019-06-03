@@ -4,9 +4,10 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
 /**
-   * BlinkCamera
+   * phpD2lAPI
    *
-   * class php et module eedomus pour D2l (ERL WiFi pour compteur Linky)
+   * class php pour D2l (ERL WiFi pour compteur Linky)
+   * API Documentation : https://consospyapi.sicame.io/swagger/index.html
    *
    * @author twitter:@havok
    * @version 2019.06.03
