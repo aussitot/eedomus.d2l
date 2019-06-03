@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "757a1507-f561-4f93-80b1-968731d9c796",
+		"name": "https://consospyapi.sicame.io",
+		"description": "API Consospy/D2L/Bornes connectées",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAPIKey",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"login\": \"login_utilisé dans l'application consospy\",\n\t\"password\": \"mot de passe\"\n}"
+				},
+				"url": {
+					"raw": "https://consospyapi.sicame.io/api/D2L/Security/GetAPIKey",
+					"protocol": "https",
+					"host": [
+						"consospyapi",
+						"sicame",
+						"io"
+					],
+					"path": [
+						"api",
+						"D2L",
+						"Security",
+						"GetAPIKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "D2Ls",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "APIKey",
+						"type": "text",
+						"value": "ApiKey provenant de GetAPIKey"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://consospyapi.sicame.io/api/D2L/D2Ls",
+					"protocol": "https",
+					"host": [
+						"consospyapi",
+						"sicame",
+						"io"
+					],
+					"path": [
+						"api",
+						"D2L",
+						"D2Ls"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LastIndexes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "APIKey",
+						"type": "text",
+						"value": "ApiKey provenant de GetAPIKey"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://consospyapi.sicame.io/api/D2L/D2Ls/Id_du_D2L/LastIndexes",
+					"protocol": "https",
+					"host": [
+						"consospyapi",
+						"sicame",
+						"io"
+					],
+					"path": [
+						"api",
+						"D2L",
+						"D2Ls",
+						"Id_du_D2L",
+						"LastIndexes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IndexesBetween",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "APIKey",
+						"type": "text",
+						"value": "ApiKey provenant de GetAPIKey"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://consospyapi.sicame.io/api/D2L/D2Ls/Id_du_D2L/LastIndexes",
+					"protocol": "https",
+					"host": [
+						"consospyapi",
+						"sicame",
+						"io"
+					],
+					"path": [
+						"api",
+						"D2L",
+						"D2Ls",
+						"Id_du_D2L",
+						"LastIndexes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
