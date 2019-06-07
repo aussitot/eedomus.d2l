@@ -253,8 +253,8 @@ ini_set("display_errors", 1);
 
      }
 
-     function getIndexesTotal($AtDate = null)
-     //Get total index
+     function getIndexes($AtDate = null)
+     //Get index
      {
        if (!$AtDate)
        {
@@ -275,25 +275,138 @@ ini_set("display_errors", 1);
          switch ($this->typeContrat) {
 
            case "BASE":
-            $indexesTotal = $LastIndexes['baseHchcEjphnBbrhcjb'];
+            $indexesTotal['total'] = $LastIndexes['baseHchcEjphnBbrhcjb']/1000;
+            $indexesTotal['base'] = $LastIndexes['baseHchcEjphnBbrhcjb']/1000;
             break;
 
            case "HEURE_CREUSE_HEURE_PLEINE":
-            $indexesTotal = $LastIndexes['baseHchcEjphnBbrhcjb']+$LastIndexes['hchpEjphpmBbrhpjb'];
+            $indexesTotal['total'] = ($LastIndexes['baseHchcEjphnBbrhcjb']+$LastIndexes['hchpEjphpmBbrhpjb'])/1000;
+            $indexesTotal['HC'] = $LastIndexes['baseHchcEjphnBbrhcjb']/1000;
+            $indexesTotal['HP'] = $LastIndexes['hchpEjphpmBbrhpjb']/1000;
             break;
 
            case "TEMPO":
-            $indexesTotal = $LastIndexes['baseHchcEjphnBbrhcjb']+$LastIndexes['hchpEjphpmBbrhpjb']+$LastIndexes['bbrhcjw']+$LastIndexes['bbrhpjw']+$LastIndexes['bbrhcjr']+$LastIndexes['bbrhpjr'];
+            $indexesTotal['total'] = ($LastIndexes['baseHchcEjphnBbrhcjb']+$LastIndexes['hchpEjphpmBbrhpjb']+$LastIndexes['bbrhcjw']+$LastIndexes['bbrhpjw']+$LastIndexes['bbrhcjr']+$LastIndexes['bbrhpjr'])/1000;
+            $indexesTotal['HCJB'] = $LastIndexes['baseHchcEjphnBbrhcjb']/1000;
+            $indexesTotal['HPJB'] = $LastIndexes['hchpEjphpmBbrhpjb']/1000;
+            $indexesTotal['HCJW'] = $LastIndexes['bbrhcjw']/1000;
+            $indexesTotal['HPJW'] = $LastIndexes['bbrhpjw']/1000;
+            $indexesTotal['HCJR'] = $LastIndexes['bbrhcjr']/1000;
+            $indexesTotal['HPJR'] = $LastIndexes['bbrhpjr']/1000;
             break;
 
            case "EJP":
-            $indexesTotal = $LastIndexes['baseHchcEjphnBbrhcjb']+$LastIndexes['hchpEjphpmBbrhpjb'];
+            $indexesTotal['total'] = ($LastIndexes['baseHchcEjphnBbrhcjb']+$LastIndexes['hchpEjphpmBbrhpjb'])/1000;
+            $indexesTotal['HN'] = $LastIndexes['baseHchcEjphnBbrhcjb']/1000;
+            $indexesTotal['HP'] = $LastIndexes['hchpEjphpmBbrhpjb']/1000;
             break;
            default:
             $indexesTotal = 0;
          }
-         return $indexesTotal/1000;
+         $this->error = "";
+         return $indexesTotal;
        }
+     }
+
+     function getPowerUsedLast($lastperiod = 'HOUR')
+     {
+       //get the power used in kWh for last MIN,HOUR,DAY,WEEK,MONTH,YEAR
+
+       //pour ne pas surcharger le serveur on demande la consommation au début et à la fin de la période (et pas pour toute la période)
+       switch ($lastperiod) {
+         case 'MIN':
+          $d0 = strtotime("-1 minutes");
+          $d0a = time();
+          $d1 = time();
+          break;
+         case 'HOUR':
+          $d0 = strtotime("-1 hours");
+          $d0a = strtotime("-1 hours + 1 minutes");
+          $d1 = time();
+          break;
+         case 'DAY':
+          $d0 = strtotime("-1 days");
+          $d0a = strtotime("-1 days + 1 minutes");
+          $d1 = time();
+          break;
+          case 'WEEK':
+           $d0 = strtotime("-1 week");
+           $d0a = strtotime("-1 week + 1 minutes");
+           $d1 = time();
+           //          echo date('Y-m-d\TH:i:00',$d0);
+           //          echo date('Y-m-d\TH:i:00',$d1);
+           break;
+          case 'MONTH':
+            $d0 = strtotime("-1 months");
+            $d0a = strtotime("-1 months + 1 minutes");
+            $d1 = time();
+            break;
+          case 'YEAR':
+            $d0 = strtotime("-1 years");
+            $d0a = strtotime("-1 years + 1 minutes");
+            $d1 = time();
+            break;
+
+         default:
+          $d0 = strtotime("-1 hours");
+          $d0a = strtotime("-1 hours + 1 minutes");
+          $d1 = time();
+          break;
+       }
+       //          echo date('Y-m-d\TH:i:00',$d0);
+       //          echo date('Y-m-d\TH:i:00',$d1);
+
+       $ListIndexesStart = $this->_getIndexesBetween(date('Y-m-d\TH:i:00',$d0), date('Y-m-d\TH:i:00',$d0a));
+       $ListIndexesStart = $ListIndexesStart[0];
+       $ListIndexesEnd = $this->_getLastIndexes();
+
+       if ($this->error)
+       {
+         return $this->error;
+       } else {
+
+         //print_r($ListIndexesStart);
+         //print_r($ListIndexesEnd);
+         switch ($this->typeContrat) {
+
+           case "BASE":
+            $powerUsed['total'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            $powerUsed['base'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            break;
+
+           case "HEURE_CREUSE_HEURE_PLEINE":
+            $powerUsed['total'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb']+$ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            $powerUsed['HC'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            $powerUsed['HP'] = ($ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            break;
+
+           case "TEMPO":
+            $powerUsed['total'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb']+$ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb']+$ListIndexesEnd['bbrhcjw']-$ListIndexesStart['bbrhcjw']+$ListIndexesEnd['bbrhpjw']-$ListIndexesStart['bbrhpjw']+$ListIndexesEnd['bbrhcjr']-$ListIndexesStart['bbrhcjr']+$ListIndexesEnd['bbrhpjr']-$ListIndexesStart['bbrhpjr'])/1000;
+            $powerUsed['HCJB'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            $powerUsed['HPJB'] = ($ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            $powerUsed['HCJW'] = ($ListIndexesEnd['bbrhcjw']-$ListIndexesStart['bbrhcjw'])/1000;
+            $powerUsed['HPJW'] = ($ListIndexesEnd['bbrhpjw']-$ListIndexesStart['bbrhpjw'])/1000;
+            $powerUsed['HCJR'] = ($ListIndexesEnd['bbrhcjr']-$ListIndexesStart['bbrhcjr'])/1000;
+            $powerUsed['HPJR'] = ($ListIndexesEnd['bbrhpjr']-$ListIndexesStart['bbrhpjr'])/1000;
+            break;
+
+           case "EJP":
+            $powerUsed['total'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb']+$ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            $powerUsed['HN'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            $powerUsed['HP'] = ($ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            break;
+           default:
+            $powerUsed = 0;
+         }
+         $this->error = "";
+         return $powerUsed;
+       }
+
+     }
+
+     function getPowerUsedBeetween($dateFrom, $dateTo)
+     {
+       //get the power used in kWh from date to date
      }
 
      function getCurrentIntensity()

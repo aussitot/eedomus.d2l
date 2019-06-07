@@ -29,10 +29,25 @@ if ($D2l->error)
   //   print_r($IndexesBetween);
   // }
 
-  echo "<p>Index actuel : ".$D2l->getIndexesTotal()." kWh</p>\r\n";
+
+  $IndexActuel = $D2l->getIndexes();
+  echo "<p>Index actuel : ".$IndexActuel['total']." kWh</br>\r\n";
+  echo "Index actuel HP : ".$IndexActuel['HP']." kWh</br>\r\n";
+  echo "Index actuel HC : ".$IndexActuel['HC']." kWh</p>\r\n";
+
   echo "<p>Intensité instantanée : ".$D2l->getCurrentIntensity()." A</p>\r\n";
-  echo "<p>Index le 05/06/2019 : ".$D2l->getIndexesTotal('2019-06-05')." kWh</p>\r\n";
+
+  $IndexDate = $D2l->getIndexes('2019-06-05');
+  echo "<p>Index le 05/06/2019 : ".$IndexDate['total']." kWh</br>\r\n";
+  echo "Index HP le 05/06/2019 : ".$IndexDate['HP']." kWh</br>\r\n";
+  echo "Index HC le 05/06/2019 : ".$IndexDate['HC']." kWh</p>\r\n";
+
   echo "<p>Type de contrat : ".$D2l->typeContrat."</p>\r\n";
+
+  $PowerUsedLastHour = $D2l->getPowerUsedLast('HOUR');
+  echo "<p>kWh totals consommés au cours de la dernière heure : ".$PowerUsedLastHour['total']." kWh</br>\r\n";
+  echo "kWh totals HP consommés au cours de la dernière heure : ".$PowerUsedLastHour['HP']." kWh</br>\r\n";
+  echo "kWh totals HC consommés au cours de la dernière heure : ".$PowerUsedLastHour['HC']." kWh</p>\r\n";
 
 }
 ?>
