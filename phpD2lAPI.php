@@ -434,8 +434,8 @@
          return $this->error;
        } else {
 
-         print_r($ListIndexesStart);
-         print_r($ListIndexesEnd);
+         // print_r($ListIndexesStart);
+         // print_r($ListIndexesEnd);
          switch ($this->typeContrat) {
 
            case "BASE":

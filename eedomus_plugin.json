@@ -1,0 +1,356 @@
+{
+	"plugin_id": "d2l",
+  "name_fr": "D2L (ERL WiFi pour compteur Linky)",
+	"icon": "d2l.png",
+	"version": "1.0.0",
+	"creation_date": "2019-06-11",
+	"modification_date": "2019-06-11",
+	"author": "<a href='http://www.aussitot.net/' target='_blank'>@havok</a>",
+	"description_fr": "Gestion des modules <a href='http://eesmart.fr/modulesd2l/erl-wifi-compteur-linky/' target='_blank'>D2L (ERL WiFi pour compteur Linky)</a>",
+	"description_en": "",
+	"description_es": "",
+	"description_it": "",
+	"description_de": "",
+  "forum_link": "http://forum.eedomus.com/viewtopic.php?f=50&t=8590",
+  "parameters":
+  [
+		{
+			"parameter": "d2l_login",
+			"description": "Identifiant de votre compte Consospy",
+			"xtype": "textfield",
+			"default_value": "",
+			"field": "width:130, allowBlank:false"
+    },
+    {
+      "parameter": "d2l_password",
+      "description": "Password de votre compte Consospy",
+      "xtype": "textfield",
+			"default_value": "",
+			"field": "width:130, allowBlank:false"
+    },
+		{
+            "parameter": "index_hchp_hp",
+            "description": "Contrat HP/HC - Index HP :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: true"
+        },
+        {
+            "parameter": "index_hchp_hc",
+            "description": "Contrat HP/HC - Index HC :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: true"
+        },
+				{
+            "parameter": "index_ejp_hn",
+            "description": "Contrat EJP - Index HN :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: false"
+        },
+				{
+            "parameter": "index_ejp_hp",
+            "description": "Contrat EJP - Index HP :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: false"
+        },
+				{
+            "parameter": "index_tempo_hcjb",
+            "description": "Contrat TEMPO - Index HC Jours Bleus :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: false"
+        },
+				{
+            "parameter": "index_tempo_hpjb",
+            "description": "Contrat TEMPO - Index HP Jours Bleus :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: false"
+        },
+				{
+            "parameter": "index_tempo_hcjw",
+            "description": "Contrat TEMPO - Index HC Jours Blancs :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: false"
+        },
+				{
+            "parameter": "index_tempo_hpjw",
+            "description": "Contrat TEMPO - Index HP Jours Blancs :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: false"
+        },
+				{
+            "parameter": "index_tempo_hcjr",
+            "description": "Contrat TEMPO - Index HC Jours Rouges :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: false"
+        },
+				{
+            "parameter": "index_tempo_hpjr",
+            "description": "Contrat TEMPO - Index HP Jours Rouges :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: false"
+        },
+				{
+            "parameter": "current_intensity",
+            "description": "Intensité :",
+            "xtype": "checkbox",
+            "field": "style: 'margin-top: 6px;', checked: true"
+        }
+  ],
+	"scripts":
+	[
+		{
+			"name": "d2l.php"
+		}
+	],
+  "devices":
+  [
+		{
+			"device_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_total",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/total",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_hc",
+			"create":"plugin.parameters.index_hchp_hc",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_hc",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HC",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_hp",
+			"create":"plugin.parameters.index_hchp_hp",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_hp",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HP",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_ejp_hp",
+			"create":"plugin.parameters.index_ejp_hp",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_ejp_hp",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HP",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_ejp_hn",
+			"create":"plugin.parameters.index_ejp_hn",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_ejp_hn",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HN",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_tempo_hcjb",
+			"create":"plugin.parameters.index_tempo_hcjb",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_tempo_hcjb",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HCJB",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_tempo_hpjb",
+			"create":"plugin.parameters.index_tempo_hpjb",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_tempo_hpjb",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HPJB",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_tempo_hcjw",
+			"create":"plugin.parameters.index_tempo_hcjw",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_tempo_hcjw",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HCJW",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_tempo_hpjw",
+			"create":"plugin.parameters.index_tempo_hpjw",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_tempo_hpjw",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HPJW",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_tempo_hcjr",
+			"create":"plugin.parameters.index_tempo_hcjr",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_tempo_hcjr",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HCJR",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_index_tempo_hpjr",
+			"create":"plugin.parameters.index_tempo_hpjr",
+			"parent_id": "d2l_index_total",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_index_tempo_hpjr",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "kW",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/indexes/HPJR",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_intensity",
+			"create":"plugin.parameters.current_intensity",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_intensity",
+			"icon": "d2l.png",
+			"utilisation_id": "35",
+			"value_unit": "A",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=currentintensity&user=[VAR1]&pass=[VAR2]",
+				"RAW_XPATH": "/root/intensity",
+				"POLLING": "1"
+			}
+		}
+  ]
+}
