@@ -49,7 +49,11 @@ if ($D2l->error)
   echo "kWh totals HP consommés au cours des dernières 24H : ".$PowerUsedLastHour['HP']." kWh</br>\r\n";
   echo "kWh totals HC consommés au cours des dernières 24H : ".$PowerUsedLastHour['HC']." kWh</p>\r\n";*/
 
-  $D2l->getPowerUsedBeetween('2019-06-05', '2019-06-06');
+  $PowerUsedBeetween = $D2l->getPowerUsedBeetween('2019-06-10', '2019-06-11');
+  echo "<p>kWh totals consommés le 10/06/2019 : ".$PowerUsedBeetween['total']." kWh</br>\r\n";
+  echo "kWh totals HP consommés le 10/06/2019 : ".$PowerUsedBeetween['HP']." kWh</br>\r\n";
+  echo "kWh totals HC consommés le 10/06/2019 : ".$PowerUsedBeetween['HC']." kWh</p>\r\n";
+
 
 }
 ?>

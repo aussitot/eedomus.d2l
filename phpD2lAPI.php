@@ -253,7 +253,7 @@ ini_set("display_errors", 1);
 
      }
 
-     function getIndexes($AtDate = null)
+     function getIndexes($AtDate = NULL)
      //Get index
      {
        if (!$AtDate)
@@ -404,26 +404,72 @@ ini_set("display_errors", 1);
 
      }
 
-     function getPowerUsedBeetween($dateFrom, $dateTo)
+     function getPowerUsedBeetween($dateFrom = NULL, $dateTo = NULL)
      {
-       //get the power used in kWh from date to date
+      //get the power used in kWh from date to date
+       if ($dateFrom == NULL) {
+         $dateFrom = date('Y-m-d\TH:i:s',mktime(date("H"), date("i"), date("s"), date("m"), date("d")-1, date("Y")));
+       }
+       if ($dateTo == NULL) {
+         $dateTo = date('Y-m-d\TH:i:s');
+       }
+
        $d0 = strtotime($dateFrom." -1 minutes");
        $d0a = strtotime($dateFrom);
        $d1 = strtotime($dateTo." -1 minutes");
        $d1a = strtotime($dateTo);
 
-       echo date('Y-m-d\TH:i:s',$d0)." ";
-       echo date('Y-m-d\TH:i:s',$d0a)." ";
-       echo date('Y-m-d\TH:i:s',$d1)." ";
-       echo date('Y-m-d\TH:i:s',$d1a);
+       // echo date('Y-m-d\TH:i:s',$d0)." ";
+       // echo date('Y-m-d\TH:i:s',$d0a)." ";
+       // echo date('Y-m-d\TH:i:s',$d1)." ";
+       // echo date('Y-m-d\TH:i:s',$d1a);
 
        $ListIndexesStart = $this->_getIndexesBetween(date('Y-m-d\TH:i:00',$d0), date('Y-m-d\TH:i:00',$d0a));
        $ListIndexesStart = $ListIndexesStart[0];
        $ListIndexesEnd = $this->_getIndexesBetween(date('Y-m-d\TH:i:00',$d1), date('Y-m-d\TH:i:00',$d1a));
        $ListIndexesEnd = $ListIndexesEnd[0];
 
-       print_r($ListIndexesStart);
-       print_r($ListIndexesEnd);
+       if ($this->error)
+       {
+         return $this->error;
+       } else {
+
+         print_r($ListIndexesStart);
+         print_r($ListIndexesEnd);
+         switch ($this->typeContrat) {
+
+           case "BASE":
+            $powerUsed['total'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            $powerUsed['base'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            break;
+
+           case "HEURE_CREUSE_HEURE_PLEINE":
+            $powerUsed['total'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb']+$ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            $powerUsed['HC'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            $powerUsed['HP'] = ($ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            break;
+
+           case "TEMPO":
+            $powerUsed['total'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb']+$ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb']+$ListIndexesEnd['bbrhcjw']-$ListIndexesStart['bbrhcjw']+$ListIndexesEnd['bbrhpjw']-$ListIndexesStart['bbrhpjw']+$ListIndexesEnd['bbrhcjr']-$ListIndexesStart['bbrhcjr']+$ListIndexesEnd['bbrhpjr']-$ListIndexesStart['bbrhpjr'])/1000;
+            $powerUsed['HCJB'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            $powerUsed['HPJB'] = ($ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            $powerUsed['HCJW'] = ($ListIndexesEnd['bbrhcjw']-$ListIndexesStart['bbrhcjw'])/1000;
+            $powerUsed['HPJW'] = ($ListIndexesEnd['bbrhpjw']-$ListIndexesStart['bbrhpjw'])/1000;
+            $powerUsed['HCJR'] = ($ListIndexesEnd['bbrhcjr']-$ListIndexesStart['bbrhcjr'])/1000;
+            $powerUsed['HPJR'] = ($ListIndexesEnd['bbrhpjr']-$ListIndexesStart['bbrhpjr'])/1000;
+            break;
+
+           case "EJP":
+            $powerUsed['total'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb']+$ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            $powerUsed['HN'] = ($ListIndexesEnd['baseHchcEjphnBbrhcjb']-$ListIndexesStart['baseHchcEjphnBbrhcjb'])/1000;
+            $powerUsed['HP'] = ($ListIndexesEnd['hchpEjphpmBbrhpjb']-$ListIndexesStart['hchpEjphpmBbrhpjb'])/1000;
+            break;
+           default:
+            $powerUsed = 0;
+         }
+         $this->error = "";
+         return $powerUsed;
+       }
 
      }
 
