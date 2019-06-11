@@ -231,7 +231,7 @@ ini_set("display_errors", 1);
 
      }
 
-     function getTypeContrat()
+     function _getTypeContrat()
      {
        //Get the subscribed contract type (based on last index)
 
@@ -407,6 +407,24 @@ ini_set("display_errors", 1);
      function getPowerUsedBeetween($dateFrom, $dateTo)
      {
        //get the power used in kWh from date to date
+       $d0 = strtotime($dateFrom." -1 minutes");
+       $d0a = strtotime($dateFrom);
+       $d1 = strtotime($dateTo." -1 minutes");
+       $d1a = strtotime($dateTo);
+
+       echo date('Y-m-d\TH:i:s',$d0)." ";
+       echo date('Y-m-d\TH:i:s',$d0a)." ";
+       echo date('Y-m-d\TH:i:s',$d1)." ";
+       echo date('Y-m-d\TH:i:s',$d1a);
+
+       $ListIndexesStart = $this->_getIndexesBetween(date('Y-m-d\TH:i:00',$d0), date('Y-m-d\TH:i:00',$d0a));
+       $ListIndexesStart = $ListIndexesStart[0];
+       $ListIndexesEnd = $this->_getIndexesBetween(date('Y-m-d\TH:i:00',$d1), date('Y-m-d\TH:i:00',$d1a));
+       $ListIndexesEnd = $ListIndexesEnd[0];
+
+       print_r($ListIndexesStart);
+       print_r($ListIndexesEnd);
+
      }
 
      function getCurrentIntensity()
@@ -431,7 +449,7 @@ ini_set("display_errors", 1);
          if ($this->_auth())
           {
             $this->_getD2lIds();
-            $this->typeContrat = $this->getTypeContrat();
+            $this->typeContrat = $this->_getTypeContrat();
           }
      }
 

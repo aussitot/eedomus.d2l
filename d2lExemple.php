@@ -30,7 +30,7 @@ if ($D2l->error)
   // }
 
 
-  $IndexActuel = $D2l->getIndexes();
+  /*$IndexActuel = $D2l->getIndexes();
   echo "<p>Index actuel : ".$IndexActuel['total']." kWh</br>\r\n";
   echo "Index actuel HP : ".$IndexActuel['HP']." kWh</br>\r\n";
   echo "Index actuel HC : ".$IndexActuel['HC']." kWh</p>\r\n";
@@ -44,10 +44,12 @@ if ($D2l->error)
 
   echo "<p>Type de contrat : ".$D2l->typeContrat."</p>\r\n";
 
-  $PowerUsedLastHour = $D2l->getPowerUsedLast('HOUR');
-  echo "<p>kWh totals consommés au cours de la dernière heure : ".$PowerUsedLastHour['total']." kWh</br>\r\n";
-  echo "kWh totals HP consommés au cours de la dernière heure : ".$PowerUsedLastHour['HP']." kWh</br>\r\n";
-  echo "kWh totals HC consommés au cours de la dernière heure : ".$PowerUsedLastHour['HC']." kWh</p>\r\n";
+  $PowerUsedLastHour = $D2l->getPowerUsedLast('DAY');
+  echo "<p>kWh totals consommés au cours des dernières 24H : ".$PowerUsedLastHour['total']." kWh</br>\r\n";
+  echo "kWh totals HP consommés au cours des dernières 24H : ".$PowerUsedLastHour['HP']." kWh</br>\r\n";
+  echo "kWh totals HC consommés au cours des dernières 24H : ".$PowerUsedLastHour['HC']." kWh</p>\r\n";*/
+
+  $D2l->getPowerUsedBeetween('2019-06-05', '2019-06-06');
 
 }
 ?>
