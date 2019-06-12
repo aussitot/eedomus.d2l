@@ -333,8 +333,6 @@
            $d0 = strtotime("-1 week");
            $d0a = strtotime("-1 week + 1 minutes");
            $d1 = time();
-           //          echo date('Y-m-d\TH:i:00',$d0);
-           //          echo date('Y-m-d\TH:i:00',$d1);
            break;
           case 'MONTH':
             $d0 = strtotime("-1 months");
