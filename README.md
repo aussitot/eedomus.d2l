@@ -29,21 +29,29 @@ $D2l->typeContrat; //Get the subscribed contract type (based on last index)
 
 ### Exemples
 ```php
-require("config.php");
 require("eedomus.lib.php"); //eedomus emulation lib
 require("phpD2lAPI.php"); //php class API for D2l
 
+$loginD2lReel="xxxx"; //login consospy
+$passwordD2lReel="yyyyy"; // password consospy
 
 $D2l = new D2l($loginD2lReel, $passwordD2lReel);
 if ($D2l->error)
 {
+
   echo $D2l->error;
+
 } else {
 
   $IndexActuel = $D2l->getIndexes();
-  echo "<p>Index actuel : ".$IndexActuel['total']." kWh</br>\r\n";
-  echo "Index actuel HP : ".$IndexActuel['HP']." kWh</br>\r\n";
-  echo "Index actuel HC : ".$IndexActuel['HC']." kWh</p>\r\n";
+  if ($D2l->error)
+  {
+    echo $D2l->error;
+  } else {
+    echo "<p>Index actuel : ".$IndexActuel['total']." kWh</br>\r\n";
+    echo "Index actuel HP : ".$IndexActuel['HP']." kWh</br>\r\n";
+    echo "Index actuel HC : ".$IndexActuel['HC']." kWh</p>\r\n";
+  }
 
   echo "<p>Intensité instantanée : ".$D2l->getCurrentIntensity()." A</p>\r\n";
 
@@ -54,10 +62,10 @@ if ($D2l->error)
 
   echo "<p>Type de contrat : ".$D2l->typeContrat."</p>\r\n";
 
-  $PowerUsedLastHour = $D2l->getPowerUsedLast('DAY');
-  echo "<p>kWh totals consommés au cours des dernières 24H : ".$PowerUsedLastHour['total']." kWh</br>\r\n";
-  echo "kWh totals HP consommés au cours des dernières 24H : ".$PowerUsedLastHour['HP']." kWh</br>\r\n";
-  echo "kWh totals HC consommés au cours des dernières 24H : ".$PowerUsedLastHour['HC']." kWh</p>\r\n";
+  $PowerUsedLastHour = $D2l->getPowerUsedLast('HOUR');
+  echo "<p>kWh totals consommés au cours de la dernière Heure : ".$PowerUsedLastHour['total']." kWh</br>\r\n";
+  echo "kWh totals HP consommés au cours de la dernière Heure : ".$PowerUsedLastHour['HP']." kWh</br>\r\n";
+  echo "kWh totals HC consommés au cours de la dernière Heure : ".$PowerUsedLastHour['HC']." kWh</p>\r\n";
 
   $PowerUsedBeetween = $D2l->getPowerUsedBeetween('2019-06-10', '2019-06-11');
   echo "<p>kWh totals consommés le 10/06/2019 : ".$PowerUsedBeetween['total']." kWh</br>\r\n";
