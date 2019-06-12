@@ -1,10 +1,10 @@
 <?php
-error_reporting(E_ALL);
+/*error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
 require("config.php");
 require("eedomus.lib.php"); //eedomus emulation lib
-
+*/
 /*
 script cree par twitter:@Havok pour la eedomus
 */
@@ -32,7 +32,7 @@ class sdk_D2l {
   {
     /* Connexion */
 
-    $infoCurl = null; //pour récupérer les info curl
+    $infoCurl = null; //pour rï¿½cupï¿½rer les info curl
 
     $postfields = '{"login":"'.$this->_login.'","password":"'.$this->_password.'"}';
     $headers = array();
@@ -83,7 +83,7 @@ class sdk_D2l {
   {
     //Get last indexes retreived by a specific D2L
 
-    $infoCurl = null; //pour récupérer les info curl
+    $infoCurl = null; //pour rï¿½cupï¿½rer les info curl
 
     $headers = array();
     $headers[] = 'Accept: application/json';
@@ -399,9 +399,10 @@ class sdk_D2l {
 $typeOrdre = getArg('type');
 $d2lUsername = getArg('user');
 $d2lPassword = getArg('pass');
+$d2lNumber = getArg('number');
 
-$D2l = new sdk_D2l($loginD2lReel, $passwordD2lReel);
-//$D2l = new sdk_D2l($d2lUsername, $d2lPassword);
+//$D2l = new sdk_D2l($loginD2lReel, $passwordD2lReel);
+$D2l = new sdk_D2l($d2lUsername, $d2lPassword, $d2lNumber);
 if ($D2l->error)
 {
   echo $D2l->error;
@@ -411,11 +412,9 @@ if ($D2l->error)
       $IndexActuel = $D2l->sdk_getIndexes();
       $eestatus = "<root><indexes>";
 
-      //reset($IndexActuel);
-      while ($i = current($IndexActuel))
+      foreach($IndexActuel as $cle => $value)
       {
-        $eestatus .= "<".key($IndexActuel).">".$IndexActuel[key($IndexActuel)]."</".key($IndexActuel).">";
-        next($IndexActuel);
+        $eestatus .= "<".$cle.">".$value."</".$cle.">";
       }
       //$eestatus .= "<total>".$IndexActuel['total']."</total><hp>".$IndexActuel['HP']."</hp><hc>".$IndexActuel['HC']."</hc>";
       $eestatus .= "</indexes></root>";
@@ -430,7 +429,6 @@ if ($D2l->error)
       $PowerUsedLastHour = $D2l->sdk_getPowerUsedLast('HOUR');
       $eestatus = "<root><power>";
 
-      $tabkey = array_keys($PowerUsedLastHour);
       foreach($PowerUsedLastHour as $cle => $value)
       {
         $eestatus .= "<".$cle.">".$value."</".$cle.">";
@@ -442,11 +440,9 @@ if ($D2l->error)
       $PowerUsedLastDay = $D2l->sdk_getPowerUsedLast('DAY');
       $eestatus = "<root><power>";
 
-      //reset($IndexActuel);
-      while ($i = current($PowerUsedLastDay))
+      foreach($PowerUsedLastDay as $cle => $value)
       {
-        $eestatus .= "<".key($PowerUsedLastDay).">".$PowerUsedLastDay[key($PowerUsedLastDay)]."</".key($PowerUsedLastDay).">";
-        next($PowerUsedLastDay);
+        $eestatus .= "<".$cle.">".$value."</".$cle.">";
       }
       $eestatus .= "</power></root>";
       break;
@@ -455,11 +451,9 @@ if ($D2l->error)
       $PowerUsedLastMonth = $D2l->sdk_getPowerUsedLast('MONTH');
       $eestatus = "<root><power>";
 
-      //reset($IndexActuel);
-      while ($i = current($PowerUsedLastMonth))
+      foreach($PowerUsedLastMonth as $cle => $value)
       {
-        $eestatus .= "<".key($PowerUsedLastMonth).">".$PowerUsedLastMonth[key($PowerUsedLastMonth)]."</".key($PowerUsedLastMonth).">";
-        next($PowerUsedLastMonth);
+        $eestatus .= "<".$cle.">".$value."</".$cle.">";
       }
       $eestatus .= "</power></root>";
       break;
@@ -468,11 +462,9 @@ if ($D2l->error)
      $PowerUsedLastYear = $D2l->sdk_getPowerUsedLast('YEAR');
      $eestatus = "<root><power>";
 
-     //reset($IndexActuel);
-     while ($i = current($PowerUsedLastYear))
+     foreach($PowerUsedLastYear as $cle => $value)
      {
-       $eestatus .= "<".key($PowerUsedLastYear).">".$PowerUsedLastYear[key($PowerUsedLastYear)]."</".key($PowerUsedLastYear).">";
-       next($PowerUsedLastYear);
+       $eestatus .= "<".$cle.">".$value."</".$cle.">";
      }
      $eestatus .= "</power></root>";
      break;

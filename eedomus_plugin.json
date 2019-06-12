@@ -1,7 +1,7 @@
 {
 	"plugin_id": "d2l",
   "name_fr": "D2L (ERL WiFi pour compteur Linky)",
-	"icon": "d2l.png",
+	"icon": "d2l-ico.png",
 	"version": "1.0.0",
 	"creation_date": "2019-06-11",
 	"modification_date": "2019-06-11",
@@ -26,6 +26,13 @@
       "description": "Password de votre compte Consospy",
       "xtype": "textfield",
 			"default_value": "",
+			"field": "width:130, allowBlank:false"
+    },
+		{
+      "parameter": "d2l_number",
+      "description": "Numéro de votre module (1 pour le premier, 2 pour le deuxième, etc...)",
+      "xtype": "numberfield",
+			"default_value": 1,
 			"field": "width:130, allowBlank:false"
     },
 		{
@@ -87,12 +94,6 @@
             "description": "Contrat TEMPO - Index HP Jours Rouges :",
             "xtype": "checkbox",
             "field": "style: 'margin-top: 6px;', checked: false"
-        },
-				{
-            "parameter": "current_intensity",
-            "description": "Intensité :",
-            "xtype": "checkbox",
-            "field": "style: 'margin-top: 6px;', checked: true"
         }
   ],
 	"scripts":
@@ -108,16 +109,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_total",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/total",
 				"POLLING": "60"
 			}
@@ -129,16 +131,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_hc",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HC",
 				"POLLING": "60"
 			}
@@ -150,16 +153,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_hp",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HP",
 				"POLLING": "60"
 			}
@@ -171,16 +175,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_ejp_hp",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HP",
 				"POLLING": "60"
 			}
@@ -192,16 +197,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_ejp_hn",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HN",
 				"POLLING": "60"
 			}
@@ -213,16 +219,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_tempo_hcjb",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HCJB",
 				"POLLING": "60"
 			}
@@ -234,16 +241,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_tempo_hpjb",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HPJB",
 				"POLLING": "60"
 			}
@@ -255,16 +263,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_tempo_hcjw",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HCJW",
 				"POLLING": "60"
 			}
@@ -276,16 +285,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_tempo_hpjw",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HPJW",
 				"POLLING": "60"
 			}
@@ -297,16 +307,17 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_tempo_hcjr",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HCJR",
 				"POLLING": "60"
 			}
@@ -318,38 +329,122 @@
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_index_tempo_hpjr",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
-			"value_unit": "kW",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=lastindex&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/indexes/HPJR",
 				"POLLING": "60"
 			}
 		},
 		{
 			"device_id": "d2l_intensity",
-			"create":"plugin.parameters.current_intensity",
 			"module_id": "51",
 			"type": "http",
 			"name_fr": "d2l_intensity",
-			"icon": "d2l.png",
-			"utilisation_id": "35",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
 			"value_unit": "A",
 			"parameters":
 			{
 				"VAR1": "plugin.parameters.d2l_login",
 				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
 				"value_type": "float",
 				"ignore_errors": 1,
-				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=currentintensity&user=[VAR1]&pass=[VAR2]",
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=currentintensity&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/intensity",
 				"POLLING": "1"
+			}
+		},
+		{
+			"device_id": "d2l_powerlasthour",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_powerlasthour",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=powerlasthour&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
+				"RAW_XPATH": "/root/power/total",
+				"POLLING": "60"
+			}
+		},
+		{
+			"device_id": "d2l_powerlastday",
+			"parent_id": "d2l_powerlasthour",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_powerlastday",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=powerlastday&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
+				"RAW_XPATH": "/root/power/total",
+				"POLLING": "360"
+			}
+		},
+		{
+			"device_id": "d2l_powerlastmonth",
+			"parent_id": "d2l_powerlasthour",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_powerlastmonth",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=powerlastmonth&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
+				"RAW_XPATH": "/root/power/total",
+				"POLLING": "360"
+			}
+		},
+		{
+			"device_id": "d2l_powerlastyear",
+			"parent_id": "d2l_powerlasthour",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "d2l_powerlastyear",
+			"icon": "d2l-ico.png",
+			"utilisation_id": "26",
+			"value_unit": "kWh",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.d2l_login",
+				"VAR2": "plugin.parameters.d2l_password",
+				"VAR3": "plugin.parameters.d2l_number",
+				"value_type": "float",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=powerlastyear&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
+				"RAW_XPATH": "/root/power/total",
+				"POLLING": "360"
 			}
 		}
   ]
