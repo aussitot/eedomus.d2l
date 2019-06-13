@@ -19,6 +19,9 @@ $D2l->getPowerUsedBeetween($dateFrom, $dateTo); //Array
 
 $D2l->getCurrentIntensity(); //String
 //Get current intensity
+
+$D2l->getInitialData(); //Array
+//Get the original d2l data
 ```
 ### Propriétés
 ```php

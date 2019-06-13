@@ -16,7 +16,7 @@
 
    class D2l {
 
-     public $version = '0.1';
+     public $version = '1.0';
      public $error = null;
      public $typeContrat = null;
 
@@ -253,6 +253,13 @@
 
      }
 
+     function getInitialData()
+     {
+       //Get the original d2l data
+       $initialData = $this->sdk__getLastIndexes();
+       return $initialData;
+     }
+
      function getIndexes($AtDate = NULL)
      //Get index
      {
@@ -479,7 +486,11 @@
        {
          return $this->error;
        } else {
-         return $LastIndexes['iinst1']+$LastIndexes['iinst2']+$LastIndexes['iinst3'];
+         $CurrentIntensity['total'] = $LastIndexes['iinst1']+$LastIndexes['iinst2']+$LastIndexes['iinst3'];
+         $CurrentIntensity['i1'] = $LastIndexes['iinst1'];
+         $CurrentIntensity['i2'] = $LastIndexes['iinst2'];
+         $CurrentIntensity['i3'] = $LastIndexes['iinst3'];
+         return $CurrentIntensity;
        }
      }
 

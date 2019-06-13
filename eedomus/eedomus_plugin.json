@@ -360,7 +360,7 @@
 				"value_type": "float",
 				"ignore_errors": 1,
 				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=currentintensity&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
-				"RAW_XPATH": "/root/intensity",
+				"RAW_XPATH": "/root/intensity/total",
 				"POLLING": "1"
 			}
 		},

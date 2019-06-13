@@ -25,7 +25,8 @@ if ($D2l->error)
     echo "Index actuel HC : ".$IndexActuel['HC']." kWh</p>\r\n";
   }
 
-  echo "<p>Intensité instantanée : ".$D2l->getCurrentIntensity()." A</p>\r\n";
+  $CurrentIntensity = $D2l->getCurrentIntensity();
+  echo "<p>Intensité instantanée : ".$CurrentIntensity['total']." A</p>\r\n";
 
   $IndexDate = $D2l->getIndexes('2019-06-05');
   echo "<p>Index le 05/06/2019 : ".$IndexDate['total']." kWh</br>\r\n";
