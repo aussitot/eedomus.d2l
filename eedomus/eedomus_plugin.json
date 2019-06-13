@@ -2,7 +2,7 @@
 	"plugin_id": "d2l",
   "name_fr": "D2L (ERL WiFi pour compteur Linky)",
 	"icon": "d2l-ico.png",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"creation_date": "2019-06-11",
 	"modification_date": "2019-06-11",
 	"author": "<a href='http://www.aussitot.net/' target='_blank'>@havok</a>",
@@ -402,7 +402,7 @@
 				"ignore_errors": 1,
 				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=powerlastday&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/power/total",
-				"POLLING": "360"
+				"POLLING": "60"
 			}
 		},
 		{
@@ -423,7 +423,7 @@
 				"ignore_errors": 1,
 				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=powerlastmonth&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/power/total",
-				"POLLING": "360"
+				"POLLING": "60"
 			}
 		},
 		{
@@ -444,7 +444,7 @@
 				"ignore_errors": 1,
 				"RAW_URL": "http://localhost/script/?exec=d2l.php&type=powerlastyear&user=[VAR1]&pass=[VAR2]&number=[VAR3]",
 				"RAW_XPATH": "/root/power/total",
-				"POLLING": "360"
+				"POLLING": "60"
 			}
 		}
   ]
