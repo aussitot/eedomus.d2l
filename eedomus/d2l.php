@@ -11,7 +11,7 @@ script cree par twitter:@Havok pour la eedomus
 
 class sdk_D2l {
 
-  public $version = '1.0';
+  public $version = '1.0.3';
   public $error = null;
   public $typeContrat = null;
 
@@ -165,7 +165,7 @@ class sdk_D2l {
       $ListIndexes = $this->sdk__getIndexesBetween(date('Y-m-d\TH:i:00',$d0), date('Y-m-d\TH:i:00',$d1));
       $LastIndexes = $ListIndexes[0];
     }
-    if ($this->error)
+    if ($this->error  || count($LastIndexes)==0)
     {
       return $this->error;
     } else {
@@ -257,7 +257,7 @@ class sdk_D2l {
     $ListIndexesStart = $ListIndexesStart[0];
     $ListIndexesEnd = $this->sdk__getLastIndexes();
 
-    if ($this->error)
+    if ($this->error || count($ListIndexesStart) == 0 || count($ListIndexesEnd) == 0)
     {
       return $this->error;
     } else {
@@ -326,7 +326,7 @@ class sdk_D2l {
     $ListIndexesEnd = $this->sdk__getIndexesBetween(date('Y-m-d\TH:i:00',$d1), date('Y-m-d\TH:i:00',$d1a));
     $ListIndexesEnd = $ListIndexesEnd[0];
 
-    if ($this->error)
+    if ($this->error || count($ListIndexesStart) == 0 || count($ListIndexesEnd) == 0)
     {
       return $this->error;
     } else {
@@ -374,7 +374,7 @@ class sdk_D2l {
   //Get current intensity
   {
     $LastIndexes = $this->sdk__getLastIndexes();
-    if ($this->error)
+    if ($this->error  || count($LastIndexes) == 0)
     {
       return $this->error;
     } else {

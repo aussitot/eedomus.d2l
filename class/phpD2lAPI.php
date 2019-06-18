@@ -16,7 +16,7 @@
 
    class D2l {
 
-     public $version = '1.0';
+     public $version = '1.0.3';
      public $error = null;
      public $typeContrat = null;
 
@@ -275,7 +275,7 @@
          $ListIndexes = $this->_getIndexesBetween(date('Y-m-d\TH:i:00',$d0), date('Y-m-d\TH:i:00',$d1));
          $LastIndexes = $ListIndexes[0];
        }
-       if ($this->error)
+       if ($this->error || count($LastIndexes) == 0)
        {
          return $this->error;
        } else {
@@ -365,7 +365,7 @@
        $ListIndexesStart = $ListIndexesStart[0];
        $ListIndexesEnd = $this->_getLastIndexes();
 
-       if ($this->error)
+       if ($this->error || count($ListIndexesStart) == 0 || count($ListIndexesEnd) == 0)
        {
          return $this->error;
        } else {
@@ -434,7 +434,7 @@
        $ListIndexesEnd = $this->_getIndexesBetween(date('Y-m-d\TH:i:00',$d1), date('Y-m-d\TH:i:00',$d1a));
        $ListIndexesEnd = $ListIndexesEnd[0];
 
-       if ($this->error)
+       if ($this->error || count($ListIndexesStart) == 0 || count($ListIndexesEnd) == 0)
        {
          return $this->error;
        } else {
@@ -482,7 +482,7 @@
      //Get current intensity
      {
        $LastIndexes = $this->_getLastIndexes();
-       if ($this->error)
+       if ($this->error || count($LastIndexes) == 0)
        {
          return $this->error;
        } else {
