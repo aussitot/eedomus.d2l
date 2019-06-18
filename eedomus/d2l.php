@@ -11,7 +11,7 @@ script cree par twitter:@Havok pour la eedomus
 
 class sdk_D2l {
 
-  public $version = '1.0.3';
+  public $version = '1.1';
   public $error = null;
   public $typeContrat = null;
 
@@ -208,7 +208,7 @@ class sdk_D2l {
   function sdk_getPowerUsedLast($lastperiod = 'HOUR')
   {
     //get the power used in kWh for last MIN,HOUR,DAY,WEEK,MONTH,YEAR
-
+    $d0 = $d0a = $d1 = $d1a = 0;
     //pour ne pas surcharger le serveur on demande la consommation au début et à la fin de la période (et pas pour toute la période)
     switch ($lastperiod) {
       case 'MIN':
@@ -226,18 +226,28 @@ class sdk_D2l {
        $d0a = strtotime("-1 days + 1 minutes");
        $d1 = time();
        break;
+       case 'DAY-1':
+        $d0 = mktime(0, 0, 0, date("m")  , date("d")-1, date("Y"));
+        $d0a = mktime(0, 1, 0, date("m")  , date("d")-1, date("Y"));
+        $d1 = mktime(23, 59, 59, date("m")  , date("d")-1, date("Y"));
+        $d1a = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+        break;
        case 'WEEK':
         $d0 = strtotime("-1 week");
         $d0a = strtotime("-1 week + 1 minutes");
         $d1 = time();
-        //          echo date('Y-m-d\TH:i:00',$d0);
-        //          echo date('Y-m-d\TH:i:00',$d1);
         break;
        case 'MONTH':
          $d0 = strtotime("-1 months");
          $d0a = strtotime("-1 months + 1 minutes");
          $d1 = time();
          break;
+       case 'MONTH-1':
+         $d0 = mktime(0, 0, 0, date("m")-1  , 1, date("Y"));
+         $d0a = mktime(0, 1, 0, date("m")-1  , 1, date("Y"));
+         $d1a = mktime(0, 0, 0, date("m")  , 1, date("Y"));
+         $d1 = strtotime("-1 minutes", $d1a);
+          break;
        case 'YEAR':
          $d0 = strtotime("-1 years");
          $d0a = strtotime("-1 years + 1 minutes");
@@ -250,12 +260,19 @@ class sdk_D2l {
        $d1 = time();
        break;
     }
-    //          echo date('Y-m-d\TH:i:00',$d0);
-    //          echo date('Y-m-d\TH:i:00',$d1);
+    // echo date('Y-m-d\TH:i:00',$d0)."</br>\r\n";
+    // echo date('Y-m-d\TH:i:00',$d0a)."</br>\r\n";
+    // echo date('Y-m-d\TH:i:00',$d1)."</br>\r\n";
+    // echo date('Y-m-d\TH:i:00',$d1a)."</br>\r\n";
 
     $ListIndexesStart = $this->sdk__getIndexesBetween(date('Y-m-d\TH:i:00',$d0), date('Y-m-d\TH:i:00',$d0a));
     $ListIndexesStart = $ListIndexesStart[0];
-    $ListIndexesEnd = $this->sdk__getLastIndexes();
+    if ($d1a == 0) {
+      $ListIndexesEnd = $this->sdk__getLastIndexes();
+    } else {
+      $ListIndexesEnd = $this->sdk__getIndexesBetween(date('Y-m-d\TH:i:00',$d1), date('Y-m-d\TH:i:00',$d1a));
+      $ListIndexesEnd = $ListIndexesEnd[0];
+    }
 
     if ($this->error || count($ListIndexesStart) == 0 || count($ListIndexesEnd) == 0)
     {
@@ -463,8 +480,30 @@ if ($D2l->error)
       $eestatus .= "</power></root>";
       break;
 
+    case 'powerlastday-1':
+      $PowerUsedLastDay = $D2l->sdk_getPowerUsedLast('DAY-1');
+      $eestatus = "<root><power>";
+
+      foreach($PowerUsedLastDay as $cle => $value)
+      {
+        $eestatus .= "<".$cle.">".$value."</".$cle.">";
+      }
+      $eestatus .= "</power></root>";
+      break;
+
     case 'powerlastmonth':
       $PowerUsedLastMonth = $D2l->sdk_getPowerUsedLast('MONTH');
+      $eestatus = "<root><power>";
+
+      foreach($PowerUsedLastMonth as $cle => $value)
+      {
+        $eestatus .= "<".$cle.">".$value."</".$cle.">";
+      }
+      $eestatus .= "</power></root>";
+      break;
+
+    case 'powerlastmonth-1':
+      $PowerUsedLastMonth = $D2l->sdk_getPowerUsedLast('MONTH-1');
       $eestatus = "<root><power>";
 
       foreach($PowerUsedLastMonth as $cle => $value)
