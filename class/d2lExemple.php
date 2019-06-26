@@ -48,5 +48,8 @@ if ($D2l->error)
   $PowerUsedLastJM1 = $D2l->getPowerUsedLast('DAY-1');
   print_r($PowerUsedLastJM1);*/
 
+  $initialData = $D2l->getInitialData();
+  print_r($initialData);
+
 }
 ?>

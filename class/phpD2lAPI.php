@@ -256,7 +256,7 @@
      function getInitialData()
      {
        //Get the original d2l data
-       $initialData = $this->sdk__getLastIndexes();
+       $initialData = $this->_getLastIndexes();
        return $initialData;
      }
 
