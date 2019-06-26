@@ -15,7 +15,7 @@ if ($D2l->error)
 
 } else {
 
-  /*$IndexActuel = $D2l->getIndexes();
+  $IndexActuel = $D2l->getIndexes();
   if ($D2l->error)
   {
     echo $D2l->error;
@@ -24,7 +24,7 @@ if ($D2l->error)
     echo "Index actuel HP : ".$IndexActuel['HP']." kWh</br>\r\n";
     echo "Index actuel HC : ".$IndexActuel['HC']." kWh</p>\r\n";
   }
-
+/*
   $CurrentIntensity = $D2l->getCurrentIntensity();
   echo "<p>Intensité instantanée : ".$CurrentIntensity['total']." A</p>\r\n";
 
@@ -43,10 +43,10 @@ if ($D2l->error)
   $PowerUsedBeetween = $D2l->getPowerUsedBeetween('2019-06-10', '2019-06-11');
   echo "<p>kWh totals consommés le 10/06/2019 : ".$PowerUsedBeetween['total']." kWh</br>\r\n";
   echo "kWh totals HP consommés le 10/06/2019 : ".$PowerUsedBeetween['HP']." kWh</br>\r\n";
-  echo "kWh totals HC consommés le 10/06/2019 : ".$PowerUsedBeetween['HC']." kWh</p>\r\n";*/
+  echo "kWh totals HC consommés le 10/06/2019 : ".$PowerUsedBeetween['HC']." kWh</p>\r\n";
 
   $PowerUsedLastJM1 = $D2l->getPowerUsedLast('DAY-1');
-  print_r($PowerUsedLastJM1);
+  print_r($PowerUsedLastJM1);*/
 
 }
 ?>
