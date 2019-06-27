@@ -11,7 +11,7 @@ script cree par twitter:@Havok pour la eedomus
 
 class sdk_D2l {
 
-  public $version = '2.0';
+  public $version = '2.1';
   public $error = null;
   public $typeContrat = null;
 
@@ -254,6 +254,11 @@ class sdk_D2l {
         $d1 = mktime(23, 59, 59, date("m")  , date("d")-1, date("Y"));
         $d1a = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
         break;
+       case 'THISDAY':
+        $d0 = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+        $d0a = mktime(0, 1, 0, date("m")  , date("d"), date("Y"));
+        $d1 = time();
+        break;
        case 'WEEK':
         $d0 = strtotime("-1 week");
         $d0a = strtotime("-1 week + 1 minutes");
@@ -269,7 +274,12 @@ class sdk_D2l {
          $d0a = mktime(0, 1, 0, date("m")-1  , 1, date("Y"));
          $d1a = mktime(0, 0, 0, date("m")  , 1, date("Y"));
          $d1 = strtotime("-1 minutes", $d1a);
-          break;
+         break;
+        case 'THISMONTH':
+         $d0 = mktime(0, 0, 0, date("m")  , 1, date("Y"));
+         $d0a = mktime(0, 1, 0, date("m")  , 1, date("Y"));
+         $d1 = time();
+         break;
        case 'YEAR':
          $d0 = strtotime("-1 years");
          $d0a = strtotime("-1 years + 1 minutes");
@@ -449,6 +459,8 @@ $typeOrdre = getArg('type');
 $d2lUsername = getArg('user');
 $d2lPassword = getArg('pass');
 $d2lNumber = getArg('number');
+$d2lfromdate = getArg('fromdate',false,date('d-m-Y'));
+$d2ltodate = getArg('todate',false,date('d-m-Y'));
 
 //$D2l = new sdk_D2l($loginD2lReel, $passwordD2lReel);
 $D2l = new sdk_D2l($d2lUsername, $d2lPassword, $d2lNumber);
@@ -513,6 +525,17 @@ if ($D2l->error)
       $eestatus .= "</power></root>";
       break;
 
+    case 'powerthisday':
+      $PowerUsedLastDay = $D2l->sdk_getPowerUsedLast('THISDAY');
+      $eestatus = "<root><power>";
+
+      foreach($PowerUsedLastDay as $cle => $value)
+      {
+        $eestatus .= "<".$cle.">".$value."</".$cle.">";
+      }
+      $eestatus .= "</power></root>";
+      break;
+
     case 'powerlastmonth':
       $PowerUsedLastMonth = $D2l->sdk_getPowerUsedLast('MONTH');
       $eestatus = "<root><power>";
@@ -526,6 +549,17 @@ if ($D2l->error)
 
     case 'powerlastmonth-1':
       $PowerUsedLastMonth = $D2l->sdk_getPowerUsedLast('MONTH-1');
+      $eestatus = "<root><power>";
+
+      foreach($PowerUsedLastMonth as $cle => $value)
+      {
+        $eestatus .= "<".$cle.">".$value."</".$cle.">";
+      }
+      $eestatus .= "</power></root>";
+      break;
+
+    case 'powerthismonth':
+      $PowerUsedLastMonth = $D2l->sdk_getPowerUsedLast('THISMONTH');
       $eestatus = "<root><power>";
 
       foreach($PowerUsedLastMonth as $cle => $value)
@@ -556,6 +590,18 @@ if ($D2l->error)
      }
      $eestatus .= "</root>";
      break;
+
+   case 'powerfromto':
+     $PowerFromTo = $D2l->sdk_getPowerUsedBeetween($d2lfromdate,$d2ltodate);
+     $eestatus = "<root><power>";
+
+     foreach($PowerFromTo as $cle => $value)
+     {
+       $eestatus .= "<".$cle.">".$value."</".$cle.">";
+     }
+     $eestatus .= "</power></root>";
+     break;
+
 
 
     default:

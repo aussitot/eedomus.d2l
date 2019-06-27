@@ -2,7 +2,7 @@
 	"plugin_id": "d2l",
   "name_fr": "D2L (ERL WiFi pour compteur Linky)",
 	"icon": "d2l-ico.png",
-	"version": "2.0",
+	"version": "2.2.2",
 	"creation_date": "2019-06-11",
 	"modification_date": "2019-06-27",
 	"author": "<a href='http://www.aussitot.net/' target='_blank'>@havok</a>",

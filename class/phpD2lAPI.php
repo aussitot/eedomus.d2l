@@ -16,7 +16,7 @@
 
    class D2l {
 
-     public $version = '2.0';
+     public $version = '2.1';
      public $error = null;
      public $typeContrat = null;
 
@@ -339,7 +339,7 @@
 
      function getPowerUsedLast($lastperiod = 'HOUR')
      {
-       //get the power used in kWh for last MIN,HOUR,DAY,WEEK,MONTH,YEAR,DAY-1,MONTH-1
+       //get the power used in kWh for last MIN,HOUR,DAY,WEEK,MONTH,YEAR,DAY-1,MONTH-1,THISDAY,THISMONTH
        $d0 = $d0a = $d1 = $d1a = 0;
        //pour ne pas surcharger le serveur on demande la consommation au début et à la fin de la période (et pas pour toute la période)
        switch ($lastperiod) {
@@ -364,6 +364,11 @@
            $d1 = mktime(23, 59, 59, date("m")  , date("d")-1, date("Y"));
            $d1a = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
            break;
+          case 'THISDAY':
+           $d0 = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+           $d0a = mktime(0, 1, 0, date("m")  , date("d"), date("Y"));
+           $d1 = time();
+           break;
           case 'WEEK':
            $d0 = strtotime("-1 week");
            $d0a = strtotime("-1 week + 1 minutes");
@@ -380,6 +385,11 @@
             $d1a = mktime(0, 0, 0, date("m")  , 1, date("Y"));
             $d1 = strtotime("-1 minutes", $d1a);
              break;
+          case 'THISMONTH':
+            $d0 = mktime(0, 0, 0, date("m")  , 1, date("Y"));
+            $d0a = mktime(0, 1, 0, date("m")  , 1, date("Y"));
+            $d1 = time();
+            break;
           case 'YEAR':
             $d0 = strtotime("-1 years");
             $d0a = strtotime("-1 years + 1 minutes");
@@ -392,10 +402,10 @@
           $d1 = time();
           break;
        }
-          // echo date('Y-m-d\TH:i:00',$d0)."</br>\r\n";
-          // echo date('Y-m-d\TH:i:00',$d0a)."</br>\r\n";
-          // echo date('Y-m-d\TH:i:00',$d1)."</br>\r\n";
-          // echo date('Y-m-d\TH:i:00',$d1a)."</br>\r\n";
+          //echo date('Y-m-d\TH:i:00',$d0)."</br>\r\n";
+          //echo date('Y-m-d\TH:i:00',$d0a)."</br>\r\n";
+          //echo date('Y-m-d\TH:i:00',$d1)."</br>\r\n";
+          //echo date('Y-m-d\TH:i:00',$d1a)."</br>\r\n";
 
        $ListIndexesStart = $this->_getIndexesBetween(date('Y-m-d\TH:i:00',$d0), date('Y-m-d\TH:i:00',$d0a));
        $ListIndexesStart = $ListIndexesStart[0];
@@ -465,10 +475,10 @@
        $d1 = strtotime($dateTo." -1 minutes");
        $d1a = strtotime($dateTo);
 
-       // echo date('Y-m-d\TH:i:s',$d0)." ";
-       // echo date('Y-m-d\TH:i:s',$d0a)." ";
-       // echo date('Y-m-d\TH:i:s',$d1)." ";
-       // echo date('Y-m-d\TH:i:s',$d1a);
+        echo date('Y-m-d\TH:i:s',$d0)." ";
+       echo date('Y-m-d\TH:i:s',$d0a)." ";
+       echo date('Y-m-d\TH:i:s',$d1)." ";
+       echo date('Y-m-d\TH:i:s',$d1a);
 
        $ListIndexesStart = $this->_getIndexesBetween(date('Y-m-d\TH:i:00',$d0), date('Y-m-d\TH:i:00',$d0a));
        $ListIndexesStart = $ListIndexesStart[0];
@@ -480,8 +490,8 @@
          return $this->error;
        } else {
 
-         // print_r($ListIndexesStart);
-         // print_r($ListIndexesEnd);
+          print_r($ListIndexesStart);
+         print_r($ListIndexesEnd);
          switch ($this->typeContrat) {
 
            case "BASE":

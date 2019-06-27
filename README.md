@@ -12,7 +12,7 @@ $D2l->getIndexes($AtDate = null); //Array
 //Get indexes
 
 $D2l->getPowerUsedLast($lastperiod = 'HOUR'); //Array
-//get the power used in kWh for last MIN,HOUR,DAY,DAY-1,WEEK,MONTH,MONTH-1,YEAR
+//get the power used in kWh for last MIN,HOUR,DAY,DAY-1,THSIDAY,WEEK,MONTH,MONTH-1,THISMONTH,YEAR,
 
 $D2l->getPowerUsedBeetween($dateFrom, $dateTo); //Array
 //get the power used in kWh from date to date
