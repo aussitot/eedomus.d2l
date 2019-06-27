@@ -16,7 +16,7 @@
 
    class D2l {
 
-     public $version = '1.1';
+     public $version = '2.0';
      public $error = null;
      public $typeContrat = null;
 
@@ -181,6 +181,28 @@
       $params = json_decode($result, true);
       **********/
       $this->error = "";
+       return $params;
+
+     }
+
+     private function _getLastCurrents()
+     {
+       //Get last currents retreived by a specific D2L
+
+       $infoCurl = null; //pour récupérer les info curl
+
+       $headers = array();
+       $headers[] = 'Accept: application/json';
+       $headers[] = 'APIKey: '.$this->_APIKey;
+
+       $return = httpQuery($this->_APILoginUrl.'/D2L/D2Ls/'.$this->_idModule.'/LastCurrents','GET',NULL,NULL,$headers,false,false,$infoCurl);
+       if ($infoCurl['http_code'] != 200) {
+         $this->error = "Return code is $infoCurl[http_code]\n";
+         return false;
+       }
+       $params = sdk_json_decode($return);
+
+       $this->error = "";
        return $params;
 
      }
@@ -500,15 +522,15 @@
      function getCurrentIntensity()
      //Get current intensity
      {
-       $LastIndexes = $this->_getLastIndexes();
-       if ($this->error || count($LastIndexes) == 0)
+       $LastCurrents = $this->_getLastCurrents();
+       if ($this->error || count($LastCurrents) == 0)
        {
          return $this->error;
        } else {
-         $CurrentIntensity['total'] = $LastIndexes['iinst1']+$LastIndexes['iinst2']+$LastIndexes['iinst3'];
-         $CurrentIntensity['i1'] = $LastIndexes['iinst1'];
-         $CurrentIntensity['i2'] = $LastIndexes['iinst2'];
-         $CurrentIntensity['i3'] = $LastIndexes['iinst3'];
+         $CurrentIntensity['total'] = $LastCurrents['iinst1']+$LastCurrents['iinst2']+$LastCurrents['iinst3'];
+         $CurrentIntensity['i1'] = $LastCurrents['iinst1'];
+         $CurrentIntensity['i2'] = $LastCurrents['iinst2'];
+         $CurrentIntensity['i3'] = $LastCurrents['iinst3'];
          return $CurrentIntensity;
        }
      }
