@@ -25,7 +25,7 @@
      private $_password;
      private $_isAuth = false;
 
-     private $_APILoginUrl = 'https://consospyapi.sicame.io/api';
+     private $_APILoginUrl = 'https://d2lapi.sicame.io/api';
      private $_APIHost = 'sicame.io';
 
      private $_numModule;
