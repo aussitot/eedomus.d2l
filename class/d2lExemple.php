@@ -6,7 +6,6 @@ require("config.php"); //remplacez cette ligne par vos login/password Consospy (
 require("eedomus.lib.php"); //eedomus emulation lib
 require("phpD2lAPI.php"); //php class API for D2l
 
-
 $D2l = new D2l($loginD2lReel, $passwordD2lReel);
 if ($D2l->error)
 {
@@ -25,8 +24,8 @@ if ($D2l->error)
     echo "Index actuel HC : ".$IndexActuel['HC']." kWh</p>\r\n";
   }
 
-  $CurrentIntensity = $D2l->getCurrentIntensity();
-  echo "<p>Intensité instantanée : ".$CurrentIntensity['total']." A</p>\r\n";
+  // $CurrentIntensity = $D2l->getCurrentIntensity();
+  // echo "<p>Intensité instantanée : ".$CurrentIntensity['total']." A</p>\r\n";
 /*
   $IndexDate = $D2l->getIndexes('2019-06-05');
   echo "<p>Index le 05/06/2019 : ".$IndexDate['total']." kWh</br>\r\n";
@@ -39,10 +38,10 @@ if ($D2l->error)
   echo "<p>kWh totals consommés le 10/06/2019 : ".$PowerUsedBeetween['total']." kWh</br>\r\n";
   echo "kWh totals HP consommés le 10/06/2019 : ".$PowerUsedBeetween['HP']." kWh</br>\r\n";
   echo "kWh totals HC consommés le 10/06/2019 : ".$PowerUsedBeetween['HC']." kWh</p>\r\n";
-
-  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('DAY-1');
-  print_r($PowerUsedLastJM1);
-
+*/
+  // $PowerUsedLastJM1 = $D2l->getPowerUsedLast('DAY-1');
+  // print_r($PowerUsedLastJM1);
+/*
   $PowerUsedLastHour = $D2l->getPowerUsedLast('HOUR');
   echo "<p>kWh totals consommés au cours de la dernière Heure : ".$PowerUsedLastHour['total']." kWh</br>\r\n";
   echo "kWh totals HP consommés au cours de la dernière Heure : ".$PowerUsedLastHour['HP']." kWh</br>\r\n";
@@ -51,15 +50,58 @@ if ($D2l->error)
   $initialData = $D2l->getInitialData();
   print_r($initialData);
 
- // Consommation du jours en cours
-  $PowerUsedThisDay = $D2l->getPowerUsedLast('THISDAY');
-  print_r($PowerUsedThisDay);
- // Consommation du mois en cours
+ // Consommation du jours en cours*/
+  // $PowerUsedThisDay = $D2l->getPowerUsedLast('HOUR');
+  // print_r($PowerUsedThisDay);
+ /*// Consommation du mois en cours
   $PowerUsedThisMonth = $D2l->getPowerUsedLast('THISMONTH');
   print_r($PowerUsedThisMonth);*/
 
-  $power = $D2l->getPowerUsedBeetween('27-06-2019','27-06-2019');
-  print_r($power);
+  // $power = $D2l->getPowerUsedBeetween('12-06-2022','03-10-2022');
+  // print_r($power);
 
+  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('HOUR');
+  echo "HOUR:";
+  print_r($PowerUsedLastJM1);
+  echo "</BR>";
+
+  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('DAY');
+  echo "DAY:";
+  print_r($PowerUsedLastJM1);
+  echo "</BR>";
+
+  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('DAY-1');
+  echo "DAY-1:";
+  print_r($PowerUsedLastJM1);
+  echo "</BR>";
+
+  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('THISDAY');
+  echo "THISDAY:";
+  print_r($PowerUsedLastJM1);
+  echo "</BR>";
+
+  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('WEEK');
+  echo "WEEK:";
+  print_r($PowerUsedLastJM1);
+  echo "</BR>";
+
+  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('MONTH');
+  echo "MONTH:";
+  print_r($PowerUsedLastJM1);
+  echo "</BR>";
+
+  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('MONTH-1');
+  echo "MONTH-1:";
+  print_r($PowerUsedLastJM1);
+  echo "</BR>";
+
+  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('THISMONTH');
+  echo "THISMONTH:";
+  print_r($PowerUsedLastJM1);
+  echo "</BR>";
+
+  $PowerUsedLastJM1 = $D2l->getPowerUsedLast('YEAR');
+  echo "YEAR:";
+  print_r($PowerUsedLastJM1);
 }
 ?>

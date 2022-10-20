@@ -27,6 +27,8 @@
 
      private $_APILoginUrl = 'https://d2lapi.sicame.io/api';
      private $_APIHost = 'sicame.io';
+     //en mn la plage horaire entre 2 mesures
+     private $_plage = 15;
 
      private $_numModule;
      private $_idModule;
@@ -350,55 +352,55 @@
           break;
          case 'HOUR':
           $d0 = strtotime("-1 hours");
-          $d0a = strtotime("-1 hours + 1 minutes");
+          $d0a = strtotime("-1 hours + ".$this->_plage." minutes");
           $d1 = time();
           break;
          case 'DAY':
           $d0 = strtotime("-1 days");
-          $d0a = strtotime("-1 days + 1 minutes");
+          $d0a = strtotime("-1 days + ".$this->_plage." minutes");
           $d1 = time();
           break;
           case 'DAY-1':
            $d0 = mktime(0, 0, 0, date("m")  , date("d")-1, date("Y"));
-           $d0a = mktime(0, 1, 0, date("m")  , date("d")-1, date("Y"));
-           $d1 = mktime(23, 59, 59, date("m")  , date("d")-1, date("Y"));
+           $d0a = mktime(0, $this->_plage, 0, date("m")  , date("d")-1, date("Y"));
+           $d1 = mktime(23, 60-$this->_plage, 0, date("m")  , date("d")-1, date("Y"));
            $d1a = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
            break;
           case 'THISDAY':
            $d0 = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
-           $d0a = mktime(0, 1, 0, date("m")  , date("d"), date("Y"));
+           $d0a = mktime(0, $this->_plage, 0, date("m")  , date("d"), date("Y"));
            $d1 = time();
            break;
           case 'WEEK':
            $d0 = strtotime("-1 week");
-           $d0a = strtotime("-1 week + 1 minutes");
+           $d0a = strtotime("-1 week + ".$this->_plage." minutes");
            $d1 = time();
            break;
           case 'MONTH':
             $d0 = strtotime("-1 months");
-            $d0a = strtotime("-1 months + 1 minutes");
+            $d0a = strtotime("-1 months + ".$this->_plage." minutes");
             $d1 = time();
             break;
           case 'MONTH-1':
             $d0 = mktime(0, 0, 0, date("m")-1  , 1, date("Y"));
-            $d0a = mktime(0, 1, 0, date("m")-1  , 1, date("Y"));
+            $d0a = mktime(0, $this->_plage, 0, date("m")-1  , 1, date("Y"));
             $d1a = mktime(0, 0, 0, date("m")  , 1, date("Y"));
-            $d1 = strtotime("-1 minutes", $d1a);
+            $d1 = strtotime("-".$this->_plage." minutes", $d1a);
              break;
           case 'THISMONTH':
             $d0 = mktime(0, 0, 0, date("m")  , 1, date("Y"));
-            $d0a = mktime(0, 1, 0, date("m")  , 1, date("Y"));
+            $d0a = mktime(0, $this->_plage, 0, date("m")  , 1, date("Y"));
             $d1 = time();
             break;
           case 'YEAR':
             $d0 = strtotime("-1 years");
-            $d0a = strtotime("-1 years + 1 minutes");
+            $d0a = strtotime("-1 years + ".$this->_plage." minutes");
             $d1 = time();
             break;
 
          default:
           $d0 = strtotime("-1 hours");
-          $d0a = strtotime("-1 hours + 1 minutes");
+          $d0a = strtotime("-1 hours + ".$this->_plage." minutes");
           $d1 = time();
           break;
        }
@@ -470,12 +472,12 @@
          $dateTo = date('Y-m-d\TH:i:s');
        }
 
-       $d0 = strtotime($dateFrom." -1 minutes");
+       $d0 = strtotime($dateFrom." -".$this->_plage." minutes");
        $d0a = strtotime($dateFrom);
-       $d1 = strtotime($dateTo." -1 minutes");
+       $d1 = strtotime($dateTo." -".$this->_plage." minutes");
        $d1a = strtotime($dateTo);
 
-        echo date('Y-m-d\TH:i:s',$d0)." ";
+       echo date('Y-m-d\TH:i:s',$d0)." ";
        echo date('Y-m-d\TH:i:s',$d0a)." ";
        echo date('Y-m-d\TH:i:s',$d1)." ";
        echo date('Y-m-d\TH:i:s',$d1a);
